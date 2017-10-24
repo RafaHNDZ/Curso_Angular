@@ -4,7 +4,8 @@
   "description": "Una practica para un curso de angular",
   "main": "index.js",
   "scripts": {
-    "test": ""
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test especified \"&& exit 1 "
   },
   "author": "Rafael Hernández",
   "license": "MIT",
