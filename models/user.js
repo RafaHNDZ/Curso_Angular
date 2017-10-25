@@ -2,7 +2,7 @@
 
 //Llamar a Mongoose y declarar Schema
 var mongoose = require('mongoose');
-var Schema = mongoose.Schema();
+var Schema = mongoose.Schema;
 
 //Definir atributos del objeto
 var UserSchema = Schema({
