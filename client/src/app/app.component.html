@@ -1,0 +1,60 @@
+<div class="navigation col-lg-1" *ngIf="identity">
+  <h1>
+    {{title}}
+  </h1>
+</div>
+<div class="clearfix">
+
+</div>
+<div class="central col-lg-11" *ngIf="identity">
+  <p>Logueado</p>
+</div>
+
+<div class="row container" *ngIf="!identity">
+  <div class="col-lg-6">
+    <h1>Identificate</h1>
+      <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
+        <p>
+          <label for="">E-Mail</label>
+          <input type="text" #email="ngModel" name="email" [(ngModel)]="user.email" class="form-control" required>
+          <span *ngIf="!email.valid && email.touched">
+              E-Mail invalido
+          </span>
+        </p>
+        <p>
+          <label for="">Contraseña</label>
+          <input type="password" class="form-control" #password="ngModel" name="password" [(ngModel)]="user.password" required>
+          <span *ngIf="!password.valid && password.touched">
+            Contraseña requerida
+          </span>
+        </p>
+        <p>
+          <button type="submit" class="btn">Entrar</button>
+        </p>
+      </form>
+  </div>
+  <div class="col-lg-6">
+    <h1>Registrate</h1>
+    <form >
+      <p>
+        <label for="">Nombre</label>
+        <input type="text" class="form-control" required>
+      </p>
+      <p>
+        <label for="">Apellidos</label>
+        <input type="text" class="form-control" required>
+      </p>
+      <p>
+        <label for="">Contraseña</label>
+        <input type="password" class="form-control" required>
+      </p>
+      <p>
+        <label for="">E-Mail</label>
+        <input type="email" class="form-control" required>
+      </p>
+      <p>
+        <button type="submit" class="btn">Registrarse</button>
+      </p>
+    </form>
+  </div>
+</div>
