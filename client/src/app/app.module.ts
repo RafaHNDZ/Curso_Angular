@@ -2,19 +2,27 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { routing, appRoutesProviders } from './app.routing';
 
 import { AppComponent } from './app.component';
+import { UserEditComponent } from './components/user-edit.component';
+import { NavComponent } from './components/nav.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    UserEditComponent,
+    NavComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    routing
   ],
-  providers: [],
+  providers: [
+    appRoutesProviders
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
