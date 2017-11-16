@@ -1,0 +1,7 @@
+<div class="head-page" [class.hidden]="!identity">
+  <div class="jumbotron">
+    <h1>{{titulo}}</h1>
+    <p>Lista de artistas</p>
+    <p *ngIf="identity && identity.role == 'ROLE_ADMIN'"><a class="btn btn-default" [routerLink]="[('/add-artist')]">Añadir artista</a></p>
+  </div>
+</div>

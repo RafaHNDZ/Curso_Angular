@@ -6,13 +6,19 @@ import { routing, appRoutesProviders } from './app.routing';
 
 import { AppComponent } from './app.component';
 import { UserEditComponent } from './components/user-edit.component';
+import { ArtistListComponent } from './components/artist-list.component';
+import { HomeComponent } from './components/home.component';
+import { ArtistAddComponent } from './components/artist-add.component';
 import { NavComponent } from './components/nav.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UserEditComponent,
-    NavComponent
+    NavComponent,
+    ArtistListComponent,
+    ArtistAddComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

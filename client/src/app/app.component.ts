@@ -35,7 +35,6 @@ export class AppComponent implements OnInit{
   public onSubmit(){
 
     //Conseguir datos de usuario desde el API
-    console.log(this.user);
     this._userService.singUp(this.user).subscribe(res => {
       var identity = res.user;
       this.identity = identity;
@@ -91,13 +90,5 @@ export class AppComponent implements OnInit{
         this.alertRegister = body.message;
       }
     });
-  }
-
-  logOut(){
-   localStorage.removeItem('identity');
-   localStorage.removeItem('token');
-   
-   this.identity = null;
-   this.token = null;
   }
 }

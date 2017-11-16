@@ -1,11 +1,5 @@
 <div class="navigation col-lg-1" *ngIf="identity">
   <nav-component></nav-component>
-  <h1>
-    {{title}}
-  </h1>
-  <span>
-    {{identity.name}} {{identity.surname}}
-  </span>
   <span class="btn btn-info" (click)="logOut()">
     Cerrar Sesión
   </span>
@@ -13,8 +7,7 @@
 <div class="clearfix">
 
 </div>
-<div class="central col-lg-11" *ngIf="identity">
-  <p>Logueado</p>
+<div class="container-fluid" [class.hidden]="!identity">
   <router-outlet></router-outlet>
 </div>
 

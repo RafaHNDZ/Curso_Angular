@@ -113,7 +113,6 @@ function updateUser(req, res){
         res.status(404).send({message:'No se ha podido actualizar el usuario'});
       }else{
         res.status(200).send({
-          image: file_name,
           user: userUpdated
         });
       }
@@ -137,9 +136,16 @@ function uploadImage(req, res){
     if(file_ext == 'png' || file_ext == 'jpg' || file_ext == 'gif'){
       User.findByIdAndUpdate(userId,{image:file_name}, (err, userUpdated) => {
         if(err){
-          res.status(200).send({message:'Error al actualizar la imagen'})
+          res.status(500).send({message:'Error al actualizar la imagen'})
         }else{
-          res.status(200).send({user:userUpdated});
+          if(!userUpdated){
+            res.status(404).send({message: 'No se ha podido actualizar el usuario'});
+          }else{
+            res.status(200).send({
+              user:userUpdated,
+              image: file_name
+            });
+          }
         }
       });
     }else{

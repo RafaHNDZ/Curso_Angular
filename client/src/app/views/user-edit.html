@@ -1,7 +1,7 @@
 <hr>
 <div class="col-lg-6" *ngIf="identity">
   <h1>{{titulo}}</h1>
-  <div *ngIf="alertRegister">
+  <div *ngIf="errorMessage">
     <div class="alert alert-info">
       <strong>Error!</strong> {{error_mensaje}}
     </div>
@@ -34,6 +34,13 @@
       <span *ngIf="!email.valid && email.touched">
         El E-Mail es obligatorio
       </span>
+    </p>
+    <p *ngIf="user.image && user.image != 'null'">
+      <img src="{{url + 'get-image-user/' + user.image}}" width="150px" height="150px">
+    </p>
+    <p>
+        <label for="">Avatar</label>
+        <input type="file" name="" (change)="fileChangeEvent($event)">
     </p>
     <p>
       <button type="submit" class="btn">Actualizar</button>
