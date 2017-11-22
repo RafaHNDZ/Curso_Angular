@@ -9,14 +9,14 @@ import { Artist } from '../models/artist';
 declare var Materialize: any;
 
 @Component({
-  selector: 'artits-add',
-  templateUrl: '../views/artist-add.html',
+  selector: 'artits-edit',
+  templateUrl: '../views/artist-detail.html',
   providers: [
     ArtistService,
     UserService
   ]
 })
-export class ArtistAddComponent implements OnInit {
+export class ArtistDetailComponent implements OnInit {
 
   public titulo;
   public artist: Artist;
@@ -30,7 +30,7 @@ export class ArtistAddComponent implements OnInit {
     private _artistServide: ArtistService,
     private _userService: UserService
   ) {
-    this.titulo = "Nuevo Artista";
+    this.titulo = "Detalles";
     this.identity = this._userService.getIdentity()
     this.token = this._userService.getToken();
     this.url = GLOBAL.url;
@@ -38,27 +38,33 @@ export class ArtistAddComponent implements OnInit {
    }
 
   ngOnInit() {
-    console.log("artits-add.component.ts cargado!");
+    console.log("artits-detail.component.ts cargado!");
     //obtener la lista de artistas
     //toast('I am a toast!', 3000, 'rounded');
+  //  this._artistServide.getArtist();
+  this.getArtist();
   }
 
-  onSubmit(){
-    this._artistServide.addArtist(this.token, this.artist).subscribe(
-      response => {
-        if(response.artist){
-          this._router.navigate(['/edit-artist/',response.artist._id]);
-        }else{
-          Materialize.toast("Error al guardar el artista", 5000, 'rounded');
+  getArtist(){
+    this._route.params.forEach((params: Params) => {
+      let id = params['id'];
+
+      this._artistServide.getArtist(this.token, id).subscribe(
+        response => {
+          if(!response.artist){
+            Materialize.toast("Error en el servidor", 5000);
+          }else{
+            this.artist = response.artist;
+          }
+        }, error => {
+          let errorMsg = <any>error;
+          if(errorMsg != null){
+            var body = JSON.parse(error._body);
+            Materialize.toast(body.message, 5000);
+          }
         }
-      }, error => {
-        var errorMsg = <any>error;
-        if(errorMsg != null){
-          var body = JSON.parse(error._body);
-          Materialize.toast(body.message, 5000, 'rounded');
-        }
-      }
-    );
+      );
+    });
   }
 
 }

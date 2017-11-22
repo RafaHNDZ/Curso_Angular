@@ -9,12 +9,12 @@
   </p>
   <p>
     <label>Descripción</label>
-    <textarea class="form-control" type="text" #name="ngModel" name="description" [(ngModel)]="artist.description" required></textarea>
+    <textarea class="materialize-textarea" #name="ngModel" name="description" [(ngModel)]="artist.description" required></textarea>
     <span *ngIf="!description.valid && description.touched">
       La descripción es obligatoria
     </span>
   </p>
   <p>
-    <button type="submit" class="btn btn-primary" [disabled]="!formArtist.form.valid"><span class="glyphicon glyphicon-ok"></span> Guardar</button>
+    <button type="submit" class="btn btn-primary">Guardar</button>
   </p>
 </form>

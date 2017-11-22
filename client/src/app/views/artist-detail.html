@@ -1,0 +1,29 @@
+<div class="row" *ngIf="identity != 'null'">
+  <div class="col s12">
+    <div class="card">
+      <div class="card-tabs">
+        <ul class="tabs tabs-fixed-width">
+          <li class="tab btn-flat"><a href="#info"><i class="material-icons left">info</i>Información</a></li>
+          <li class="tab btn-flat"><a href="#albums"><i class="material-icons left">bookmarks</i>Albums</a></li>
+        </ul>
+      </div>
+      <div class="card-content">
+        <div id="info">
+          <h4>{{artist.name}}</h4>
+        </div>
+        <div id="albums">
+          <h3>albums</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="fixed-action-btn vertical" *ngIf="identity && identity.role == 'ROLE_ADMIN'">
+    <a class="btn-floating btn-large red">
+      <i class="large material-icons">settings</i>
+    </a>
+    <ul>
+      <li><a class="btn-floating green" [routerLink]="[('/add-album')]"><i class="material-icons">add</i></a></li>
+      <li><a class="btn-floating yellow" [routerLink]="['/edit-artist/',artist._id]"><i class="material-icons">edit</i></a></li>
+    </ul>
+  </div>
+</div>

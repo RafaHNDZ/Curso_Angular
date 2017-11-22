@@ -2,6 +2,36 @@
   <div class="jumbotron">
     <h1>{{titulo}}</h1>
     <p>Lista de artistas</p>
-    <p *ngIf="identity && identity.role == 'ROLE_ADMIN'"><a class="btn btn-default" [routerLink]="[('/add-artist')]">Añadir artista</a></p>
+    <div class="row">
+      <div class="">
+        <ul class="pagination">
+          <li class="waves-effect"><a [routerLink]="['/artists/', prev_page]"><i class="material-icons">chevron_left</i></a></li>
+          <li class="waves-effect"><a [routerLink]="['/artists/', next_page]"><i class="material-icons">chevron_right</i></a></li>
+        </ul>
+      </div>
+      <div class="col s12 m4 l4" *ngFor="let artist of artists">
+        <div class="card">
+          <div class="card-image waves-effect waves-block waves-light">
+            <img class="activator" src="{{url + 'get-image-artist/' + artist.image}}">
+          </div>
+          <div class="card-content">
+            <span class="card-title activator grey-text text-darken-4">{{artist.name}}<i class="material-icons right">more_vert</i></span>
+            <p><a [routerLink]="['/artist/', artist._id]">Ver</a></p>
+          </div>
+          <div class="card-reveal">
+            <span class="card-title grey-text text-darken-4">{{artist.name}}<i class="material-icons right">close</i></span>
+            <p>{{artist.description}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="fixed-action-btn vertical" *ngIf="identity && identity.role == 'ROLE_ADMIN'">
+      <a class="btn-floating btn-large red">
+        <i class="large material-icons">settings</i>
+      </a>
+      <ul>
+        <li><a class="btn-floating green" [routerLink]="[('/add-artist')]"><i class="material-icons">add</i></a></li>
+      </ul>
+    </div>
   </div>
 </div>

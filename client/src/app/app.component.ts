@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from './models/user';
 import { UserService } from './services/user.service';
+import { GLOBAL } from './services/global';
+
+declare var $: any;
+declare var jQuery: any;
 
 @Component({
   selector: 'app-root',
@@ -18,6 +22,7 @@ export class AppComponent implements OnInit{
   public token;
   public error_mensaje;
   public alertRegister;
+  public url;
 
   constructor(
     private _userService: UserService
@@ -25,6 +30,7 @@ export class AppComponent implements OnInit{
     //Inicializar un objeto Usuario vacio
     this.user = new User('','','','','','ROLE_USER','');
     this.user_register = new User('','','','','','ROLE_USER','');
+    this.url = GLOBAL.url;
   }
 
   ngOnInit(){
@@ -90,5 +96,12 @@ export class AppComponent implements OnInit{
         this.alertRegister = body.message;
       }
     });
+  }
+
+  logOut(){
+    localStorage.removeItem('identity');
+    localStorage.removeItem('token');
+    this.identity = null;
+    this.token = null;
   }
 }

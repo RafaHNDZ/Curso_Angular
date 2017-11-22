@@ -1,49 +1,63 @@
-<hr>
-<div class="col-lg-6" *ngIf="identity">
-  <h1>{{titulo}}</h1>
-  <div *ngIf="errorMessage">
-    <div class="alert alert-info">
-      <strong>Error!</strong> {{error_mensaje}}
+<div *ngIf="identity">
+  <div class="row">
+    <div class="col s12">
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title">{{titulo}}</span>
+          <form #registerForm="ngForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+              <div class="input-field col s6">
+                <label for="">Nombre</label>
+                <input type="text" #name="ngModel" name="name" [(ngModel)]="user.name" class="form-control" required>
+                <span *ngIf="!name.valid && name.touched">
+                  El nombre es oabligatorio
+                </span>
+              </div>
+              <div class="input-field col s6">
+                <label for="">Apellidos</label>
+                <input type="text" class="form-control" required #surname="ngModel" name="surname" [(ngModel)]="user.surname">
+                <span *ngIf="!surname.valid && surname.touched">
+                  El apellido es obligatorio
+                </span>
+              </div>
+              <div class="input-field col s6">
+                <label for="">Contraseña</label>
+                <input type="password" class="form-control" required #password="ngModel" name="password" [(ngModel)]="user.password">
+                <span *ngIf="!password.valid && password.touched">
+                  La contraseña es oabligatoria
+                </span>
+              </div>
+              <div class="input-field col s6">
+                <label for="">E-Mail</label>
+                <input type="email" class="form-control" required #email="ngModel" name="emai" [(ngModel)]="user.email">
+                <span *ngIf="!email.valid && email.touched">
+                  El E-Mail es obligatorio
+                </span>
+              </div>
+              <p *ngIf="user.image && user.image != 'null'">
+                <img src="{{url + 'get-image-user/' + user.image}}" width="150px" height="150px">
+              </p>
+              <div class="file-field input-field">
+                <div class="btn">
+                  <span>Imagen</span>
+                  <input type="file" name="" (change)="fileChangeEvent($event)">
+                </div>
+                <div class="file-path-wrapper">
+                  <input class="file-path validate" type="text">
+                </div>
+              </div>
+                <!--
+                  <label for="">Avatar</label>
+                  <input type="file" name="" (change)="fileChangeEvent($event)">
+                -->
+
+              <div class="col">
+                <button type="submit" class="btn"><i class="material-icons left">save</i>Actualizar</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
-  <form #registerForm="ngForm" (ngSubmit)="onSubmit()">
-    <p>
-      <label for="">Nombre</label>
-      <input type="text" #name="ngModel" name="name" [(ngModel)]="user.name" class="form-control" required>
-      <span *ngIf="!name.valid && name.touched">
-        El nombre es oabligatorio
-      </span>
-    </p>
-    <p>
-      <label for="">Apellidos</label>
-      <input type="text" class="form-control" required #surname="ngModel" name="surname" [(ngModel)]="user.surname">
-      <span *ngIf="!surname.valid && surname.touched">
-        El apellido es obligatorio
-      </span>
-    </p>
-    <p>
-      <label for="">Contraseña</label>
-      <input type="password" class="form-control" required #password="ngModel" name="password" [(ngModel)]="user.password">
-      <span *ngIf="!password.valid && password.touched">
-        La contraseña es oabligatoria
-      </span>
-    </p>
-    <p>
-      <label for="">E-Mail</label>
-      <input type="email" class="form-control" required #email="ngModel" name="emai" [(ngModel)]="user.email">
-      <span *ngIf="!email.valid && email.touched">
-        El E-Mail es obligatorio
-      </span>
-    </p>
-    <p *ngIf="user.image && user.image != 'null'">
-      <img src="{{url + 'get-image-user/' + user.image}}" width="150px" height="150px">
-    </p>
-    <p>
-        <label for="">Avatar</label>
-        <input type="file" name="" (change)="fileChangeEvent($event)">
-    </p>
-    <p>
-      <button type="submit" class="btn">Actualizar</button>
-    </p>
-  </form>
 </div>
