@@ -1,0 +1,47 @@
+<div class="row" *ngIf="identity && identity != 'null' && identity.role == 'ROLE_ADMIN'">
+  <div class="col s12">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">{{titulo}}</span>
+        <form #formAlbum="ngForm" (ngSubmit)="onSubmit()">
+          <div class="input-field col s12 m6">
+            <div class="form-group">
+              <label class="control-label" for="">Titulo</label>
+              <input type="text" class="form-control" #title="ngModel" name="title" [(ngModel)]="album.title" required>
+              <span class="help-block" *ngIf="!title.vaid && title.touched">El titulo es obligatorio</span>
+            </div>
+          </div>
+          <div class="input-field col s12 m6">
+            <div class="form-group">
+              <label class="control-label" for="">Año</label>
+              <input type="text" class="form-control" #year="ngModel" name="year" [(ngModel)]="album.year" required>
+              <span class="help-block" *ngIf="!year.valid && year.touched">El año es obligatorio</span>
+            </div>
+          </div>
+          <div class="input-field col s12">
+            <textarea id="description" class="materialize-textarea" #description="ngModel" name="description" [(ngModel)]="album.description"></textarea>
+            <label for="description">Descripción</label>
+            <span class="help-bloc" *ngIf="!description.valid && description.touched">La descripción es obligatoria</span>
+          </div>
+          <div class="row" *ngIf="is_edit">
+            <div class="col s12 m6">
+              <div class="file-field input-field">
+                <div class="btn">
+                  <span>Portada</span>
+                  <input type="file" (change)="fileChangeEvent($event)">
+                </div>
+                <div class="file-path-wrapper">
+                  <input class="file-path validate" type="text" placeholder="Selecciona una imagen de portada...">
+                </div>
+              </div>
+            </div>
+            <div class="col s12 m6">
+              <img class="img-responsive" src="" width="250" height="250" style="pading: 0 auto;">
+            </div>
+          </div>
+          <button type="submit" class="btn">Registrar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

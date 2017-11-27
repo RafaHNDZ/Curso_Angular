@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { GLOBAL } from '../services/global';
 import { ArtistService } from '../services/artist.service';
 import { UserService } from '../services/user.service';
 import { Artist } from '../models/artist';
+import { MaterializeAction } from 'angular2-materialize';
 
 declare var Materialize: any;
 
@@ -23,11 +24,12 @@ export class ArtistDetailComponent implements OnInit {
   public identity;
   public token;
   public url: string;
+  modalDelete = new EventEmitter<string|MaterializeAction>();
 
   constructor(
     private _route: ActivatedRoute,
     private _router: Router,
-    private _artistServide: ArtistService,
+    private _artistService: ArtistService,
     private _userService: UserService
   ) {
     this.titulo = "Detalles";
@@ -49,7 +51,7 @@ export class ArtistDetailComponent implements OnInit {
     this._route.params.forEach((params: Params) => {
       let id = params['id'];
 
-      this._artistServide.getArtist(this.token, id).subscribe(
+      this._artistService.getArtist(this.token, id).subscribe(
         response => {
           if(!response.artist){
             Materialize.toast("Error en el servidor", 5000);
@@ -65,6 +67,35 @@ export class ArtistDetailComponent implements OnInit {
         }
       );
     });
+  }
+
+  openModalDelete(){
+    this.modalDelete.emit({action: "modal", params:['open']});
+  }
+
+  closeModalDelete(){
+    this.modalDelete.emit({action: "modal", params:['close']});
+    Materialize.toast("Cancelado", 3000);
+  }
+
+  onDeleteArtist(artistId){
+    this._artistService.deleteArtist(this.token, artistId).subscribe(
+      response => {
+        if(!response.artist){
+          Materialize.toast("Error en el servidor");
+        }else{
+          this.closeModalDelete();
+          Materialize.toast("Eliminado");
+          this._router.navigate(['/artists/1']);
+        }
+      }, error => {
+        var errorMsg = <any>error;
+        if(errorMsg != null){
+          var body = JSON.parse(error._body);
+          Materialize.toast(body.message, 5000);
+        }
+      }
+    );
   }
 
 }

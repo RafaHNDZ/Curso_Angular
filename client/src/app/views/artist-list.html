@@ -12,7 +12,7 @@
       <div class="col s12 m4 l4" *ngFor="let artist of artists">
         <div class="card">
           <div class="card-image waves-effect waves-block waves-light">
-            <img class="activator" src="{{url + 'get-image-artist/' + artist.image}}">
+            <img class="activator" src="{{url + 'get-image-artist/' + artist.image}}" width="250" height="250">
           </div>
           <div class="card-content">
             <span class="card-title activator grey-text text-darken-4">{{artist.name}}<i class="material-icons right">more_vert</i></span>
@@ -30,7 +30,7 @@
         <i class="large material-icons">settings</i>
       </a>
       <ul>
-        <li><a class="btn-floating green" [routerLink]="[('/add-artist')]"><i class="material-icons">add</i></a></li>
+        <li><a class="btn-floating green tooltipped" data-position="left" data-delay="50" data-tooltip="Nuevo" [routerLink]="[('/add-artist')]"><i class="material-icons">add</i></a></li>
       </ul>
     </div>
   </div>

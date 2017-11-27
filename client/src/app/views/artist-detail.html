@@ -1,19 +1,12 @@
 <div class="row" *ngIf="identity != 'null'">
   <div class="col s12">
     <div class="card">
-      <div class="card-tabs">
-        <ul class="tabs tabs-fixed-width">
-          <li class="tab btn-flat"><a href="#info"><i class="material-icons left">info</i>Información</a></li>
-          <li class="tab btn-flat"><a href="#albums"><i class="material-icons left">bookmarks</i>Albums</a></li>
-        </ul>
-      </div>
       <div class="card-content">
-        <div id="info">
-          <h4>{{artist.name}}</h4>
+        <span class="card-title">{{artist.name}}</span>
+        <div class="image_artist" *ngIf="artist.image != null">
+          <img src="{{url + 'get-image-artist/' + artist.image}}" width="150" height="150">
         </div>
-        <div id="albums">
-          <h3>albums</h3>
-        </div>
+        <p>{{artist.description}}</p>
       </div>
     </div>
   </div>
@@ -22,8 +15,19 @@
       <i class="large material-icons">settings</i>
     </a>
     <ul>
-      <li><a class="btn-floating green" [routerLink]="[('/add-album')]"><i class="material-icons">add</i></a></li>
-      <li><a class="btn-floating yellow" [routerLink]="['/edit-artist/',artist._id]"><i class="material-icons">edit</i></a></li>
+      <li><a class="btn-floating green" [routerLink]="['/add-album', artist._id]"><i class="material-icons">add</i></a></li>
+      <li><a class="btn-floating orange" [routerLink]="['/edit-artist/', artist._id]"><i class="material-icons">edit</i></a></li>
+      <li><a class="btn-floating red" (click)="openModalDelete()"><i class="material-icons">delete</i></a></li>
     </ul>
+  </div>
+</div>
+<div id="modalDeleteDialog" class="modal modal-fixed-footer" materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalDelete">
+  <div class="modal-content">
+    <h4>Atencion</h4>
+    <p>¿Eliminar artista {{artist.name}}?</p>
+  </div>
+  <div class="modal-footer">
+    <a class="waves-effect waves-green btn-flat" (click)="closeModalDelete()">No</a>
+    <a class="waves-effect waves-green btn-flat" (click)="onDeleteArtist(artist._id)">Si</a>
   </div>
 </div>

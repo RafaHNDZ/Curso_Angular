@@ -5,6 +5,7 @@ import { GLOBAL } from './services/global';
 
 declare var $: any;
 declare var jQuery: any;
+declare var Materialize: any;
 
 @Component({
   selector: 'app-root',
@@ -64,7 +65,7 @@ export class AppComponent implements OnInit{
           if(msg_error != null){
             //Parsear respuesta a JSON
             var body = JSON.parse(error._body);
-            this.error_mensaje = body.message;
+            Materialize.toast(body.message, 5000);
           }
         });
       }
@@ -73,7 +74,7 @@ export class AppComponent implements OnInit{
       if(msg_error != null){
         //Parsear respuesta a JSON
         var body = JSON.parse(error._body);
-        this.error_mensaje = body.message;
+        Materialize.toast(body.message, 5000);
       }
     });
   }
