@@ -1,0 +1,50 @@
+  <div class="row" *ngIf="album">
+    <div class="col s12">
+      <div class="card">
+        <div class="card-content">
+          <div class="row">
+            <div class="col">
+              <img src="{{url + 'get-image-album/' + album.image}}" width="150" height="150">
+            </div>
+            <div class="col">
+              <h4 class="card-title">{{album.title}}</h4>
+              <p>{{album.year}}</p>
+              <br>
+              <p>{{album.description}}</p>
+            </div>
+            <div class="col s12">
+              <ul class="collection"onloadedmetadata="">
+                <li *ngFor="let song of songs" class="collection-item">
+                  <div>
+                    {{song.name}}
+                    <a class="secondary-content waves-effect waves-teal"><i class="material-icons">play_arrow</i></a>
+                    <a class="secondary-content waves-effect waves-teal" [routerLink]="['/edit-song/', song._id]" *ngIf="identity.role == 'ROLE_ADMIN'"><i class="material-icons">more_vert</i></a>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="fixed-action-btn vertical" *ngIf="identity && identity.role == 'ROLE_ADMIN'">
+      <a class="btn-floating btn-large red">
+        <i class="large material-icons">settings</i>
+      </a>
+      <ul>
+        <li><a class="btn-floating green" [routerLink]="['/add-song', album._id]"><i class="material-icons">add</i></a></li>
+        <li><a class="btn-floating orange" [routerLink]="['/edit-album/', album._id]"><i class="material-icons">edit</i></a></li>
+        <li><a class="btn-floating red" (click)="openModalDelete()"><i class="material-icons">delete</i></a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="modalDeleteDialog" class="modal modal-fixed-footer" materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalDelete">
+    <div class="modal-content">
+      <h4>Atencion</h4>
+      <p>¿Eliminar álbum?</p>
+    </div>
+    <div class="modal-footer">
+      <a class="waves-effect waves-green btn-flat" (click)="closeModalDelete()">No</a>
+      <a class="waves-effect waves-green btn-flat" (click)="onDeleteAlbum(album._id)">Si</a>
+    </div>
+  </div>

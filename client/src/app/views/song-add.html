@@ -1,0 +1,75 @@
+<div class="row" *ngIf="identity && identity.role == 'ROLE_ADMIN'">
+  <div class="col s12 m12 l12">
+    <div class="card">
+      <div class="card-content">
+        <form #formSong="ngForm" (ngSubmit)="onSubmit()">
+          <legend>{{titulo}}</legend>
+          <div class="row">
+            <div class="col s12 m6 l6">
+              <div class="input-field">
+                <div class="form-group">
+                  <label class="control-label" for="name">Titulo</label>
+                  <input type="text" class="form-control" #name="ngModel" name="name" [(ngModel)]="song.name">
+                  <span class="help-block" *ngIf="!name.valid && name.touched">El titulo es obligatorio</span>
+                </div>
+              </div>
+            </div>
+            <div class="col s12 m6 l6">
+              <div class="input-field">
+                <div class="form-group">
+                  <label class="control-label" for="duration">Duración</label>
+                  <input type="text" class="form-control" #duration="ngModel" name="duration" [(ngModel)]="song.duration">
+                  <span class="help-block" *ngIf="!duration.valid && duration.touched">La duración es obligatorio</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="input-field">
+            <div class="form-group">
+              <label class="control-label" for="number">Numero</label>
+              <input type="text" class="form-control" #number="ngModel" name="number" [(ngModel)]="song.number">
+              <span class="help-block" *ngIf="!number.valid && number.touched">El numero es obligatorio</span>
+            </div>
+          </div>
+          <div class="row" *ngIf="is_edit">
+            <div class="col s12 m6 l6">
+              <div class="file-field input-field">
+                <div class="btn">
+                  <span>Archivo</span>
+                  <input type="file" (change)="fileChangeEvent($event)">
+                </div>
+                <div class="file-path-wrapper">
+                  <input class="file-path validate" type="text" placeholder="Selecciona una imagen de portada...">
+                </div>
+              </div>
+            </div>
+            <div class="col s12 m6 l6">
+              <audio controls src="{{url + 'get-song-file/' + song.file}}">
+
+              </audio>
+            </div>
+          </div>
+          <button type="submit" class="btn">Enviar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="fixed-action-btn vertical" *ngIf="identity && identity.role == 'ROLE_ADMIN' && is_edit">
+    <a class="btn-floating btn-large red">
+      <i class="large material-icons">settings</i>
+    </a>
+    <ul>
+      <li><a class="btn-floating red" (click)="openModalDelete()"><i class="material-icons">delete</i></a></li>
+    </ul>
+  </div>
+</div>
+<div id="modalDeleteDialog" class="modal modal-fixed-footer" materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalDelete">
+  <div class="modal-content">
+    <h4>Atencion</h4>
+    <p>¿Eliminar la cancion {{song.name}}?</p>
+  </div>
+  <div class="modal-footer">
+    <a class="waves-effect waves-green btn-flat" (click)="closeModalDelete()">No</a>
+    <a class="waves-effect waves-green btn-flat" (click)="onDeleteSong(song._id)">Si</a>
+  </div>
+</div>

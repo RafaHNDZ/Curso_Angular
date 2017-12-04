@@ -54,6 +54,7 @@ export class AlbumAddComponent implements OnInit {
           Materialize.toast("Error en el servidor", 5000);
         }else{
           Materialize.toast("Registrado", 4000);
+          this._router.navigate(['/edit-album', response.album._id]);
         }
       }, error => {
         var errorMsg = <any>error;

@@ -1,1 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+.collection{
+  margin: 0px;
+  padding: 0px;
+}
+
+.collection-item{
+  list-style: none;
+  padding-top: 20px;
+}

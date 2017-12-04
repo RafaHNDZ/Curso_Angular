@@ -139,17 +139,17 @@ function uploadImage(req, res){
     if(file_ext == 'png' || file_ext == 'jpg' || file_ext == 'gif'){
       Artist.findByIdAndUpdate(artistId,{image:file_name}, (err, artistUpdated) => {
         if(err){
-          res.status(200).send({message:'Error al actualizar la imagen'})
+          res.status(500).send({message:'Error al actualizar la imagen'})
         }else{
           res.status(200).send({artist:artistUpdated});
         }
       });
     }else{
-      res.status(200).send({message: 'La extencion del fichero no es valida'});
+      res.status(500).send({message: 'La extencion del fichero no es valida'});
     }
     console.log(ex_split);
   }else{
-    res.status(200).send({message: 'No has subido ninguna imagen'});
+    res.status(404).send({message: 'No has subido ninguna imagen'});
   }
 }
 

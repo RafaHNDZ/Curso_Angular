@@ -10,6 +10,23 @@
       </div>
     </div>
   </div>
+  <div class="row" id="gallery-albums">
+    <div class="col s12 m4 l3" *ngFor="let album of albums">
+      <div class="card">
+        <div class="card-image">
+          <img src="{{url + 'get-image-album/' + album.image}}">
+          <span class="card-title">{{album.title}}</span>
+        </div>
+        <div class="card-content">
+          <p>{{album.description}}</p>
+        </div>
+        <div class="card-action">
+          <a [routerLink]="['/artist', album.artist._id]">{{album.artist.name}}</a>
+          <a [routerLink]="['/album/', album._id]">Ver</a>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="fixed-action-btn vertical" *ngIf="identity && identity.role == 'ROLE_ADMIN'">
     <a class="btn-floating btn-large red">
       <i class="large material-icons">settings</i>

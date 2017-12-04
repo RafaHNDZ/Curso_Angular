@@ -23,7 +23,6 @@ export class UserService{
     let params = json;
 
     let headers = new Headers({
-      'Access-Control-Allow-Origin':'*',
       'Content-Type':'application/json'
     });
 

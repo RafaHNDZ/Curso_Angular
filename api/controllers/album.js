@@ -79,7 +79,7 @@ function updateAlbum(req, res){
       if(!albumUpdated){
         res.status(404).send({message: 'No se pudo actualizar el album'});
       }else{
-        res.status(200).send({albumUpdated});
+        res.status(200).send({album: albumUpdated});
       }
     }
   });
@@ -127,18 +127,17 @@ function uploadImage(req, res){
     //Comprobar estencion
     if(file_ext == 'png' || file_ext == 'jpg' || file_ext == 'gif'){
       Album.findByIdAndUpdate(albumId,{image:file_name}, (err, albumUpdated) => {
-        if(err){
-          res.status(200).send({message:'Error al actualizar la imagen'})
+        if(!err){
+          res.status(200).send({album: albumUpdated});
         }else{
-          res.status(200).send({artist:albumUpdated});
+          res.status(500).send({message:'Error al actualizar la imagen'});
         }
       });
     }else{
-      res.status(200).send({message: 'La extencion del fichero no es valida'});
+      res.status(500).send({message: 'La extencion del fichero no es valida'});
     }
-    console.log(ex_split);
   }else{
-    res.status(200).send({message: 'No has subido ninguna imagen'});
+    res.status(404).send({message: 'No has subido ninguna imagen'});
   }
 }
 

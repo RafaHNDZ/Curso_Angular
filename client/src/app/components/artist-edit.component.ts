@@ -27,6 +27,7 @@ export class ArtistEditComponent implements OnInit {
   public url: string;
   public is_edit;
   public filesToUpload: Array<File>;
+  public changed_image: boolean;
 
   constructor(
     private _route: ActivatedRoute,
@@ -41,6 +42,7 @@ export class ArtistEditComponent implements OnInit {
     this.url = GLOBAL.url;
     this.artist = new Artist('','','');
     this.is_edit = true;
+    this.changed_image = false;
    }
 
   ngOnInit() {
@@ -82,13 +84,17 @@ export class ArtistEditComponent implements OnInit {
         response => {
           if(response.artist){
             //Cargar imagen de artistas
-            this._uploadService.makeFileRequest(this.url+'upload-image-artist/'+id, [], this.filesToUpload, this.token, 'image')
-              .then(result => {
-                Materialize.toast("Actualizado", 5000);
-              }, error => {
-                Materialize.toast("Ocurrio un error al cargar la imagen", 5000);
-                console.log(error);
-              });
+            if(this.changed_image == true){
+              this._uploadService.makeFileRequest(this.url+'upload-image-artist/'+id, [], this.filesToUpload, this.token, 'image')
+                .then(result => {
+                  Materialize.toast("Actualizado", 5000);
+                }, error => {
+                  Materialize.toast("Ocurrio un error al cargar la imagen", 5000);
+                  console.log(error);
+                });
+            }else{
+              Materialize.toast("Actualizado", 5000);
+            }
           }else{
             Materialize.toast("Error al actualizar el artista", 5000, 'rounded');
           }
@@ -106,6 +112,7 @@ export class ArtistEditComponent implements OnInit {
   fileChangeEvent(fileInput: any){
     this.filesToUpload = <Array<File>>fileInput.target.files;
     console.log(this.filesToUpload);
+    this.changed_image = true;
   }
 
 }

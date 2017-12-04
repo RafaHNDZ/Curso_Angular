@@ -34,16 +34,18 @@
                   El E-Mail es obligatorio
                 </span>
               </div>
-              <p *ngIf="user.image && user.image != 'null'">
-                <img src="{{url + 'get-image-user/' + user.image}}" width="150px" height="150px">
-              </p>
-              <div class="file-field input-field">
-                <div class="btn">
-                  <span>Imagen</span>
-                  <input type="file" name="" (change)="fileChangeEvent($event)">
+              <div class="row">
+                <div class="col s12 m6" *ngIf="user.image && user.image != 'null'">
+                  <img src="{{url + 'get-image-user/' + user.image}}" width="150px" height="150px">
                 </div>
-                <div class="file-path-wrapper">
-                  <input class="file-path validate" type="text">
+                <div class="file-field input-field col s12 m6">
+                  <div class="btn">
+                    <span>Imagen</span>
+                    <input type="file" name="" (change)="fileChangeEvent($event)">
+                  </div>
+                  <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text">
+                  </div>
                 </div>
               </div>
                 <!--

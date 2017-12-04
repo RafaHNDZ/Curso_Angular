@@ -4,7 +4,9 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { GLOBAL } from '../services/global';
 import { ArtistService } from '../services/artist.service';
 import { UserService } from '../services/user.service';
+import { AlbumService } from '../services/album.service';
 import { Artist } from '../models/artist';
+import { Album } from '../models/album';
 import { MaterializeAction } from 'angular2-materialize';
 
 declare var Materialize: any;
@@ -14,13 +16,15 @@ declare var Materialize: any;
   templateUrl: '../views/artist-detail.html',
   providers: [
     ArtistService,
-    UserService
+    UserService,
+    AlbumService
   ]
 })
 export class ArtistDetailComponent implements OnInit {
 
   public titulo;
   public artist: Artist;
+  public albums: Album[];
   public identity;
   public token;
   public url: string;
@@ -30,7 +34,8 @@ export class ArtistDetailComponent implements OnInit {
     private _route: ActivatedRoute,
     private _router: Router,
     private _artistService: ArtistService,
-    private _userService: UserService
+    private _userService: UserService,
+    private _albumService: AlbumService
   ) {
     this.titulo = "Detalles";
     this.identity = this._userService.getIdentity()
@@ -57,6 +62,22 @@ export class ArtistDetailComponent implements OnInit {
             Materialize.toast("Error en el servidor", 5000);
           }else{
             this.artist = response.artist;
+            this._albumService.getAlbums(this.token, this.artist._id).subscribe(
+              response =>{
+                if(!response.albums){
+                  Materialize.toast("No se encontraron abums", 5000);
+                }else{
+                  this.albums = response.albums;
+                  console.log(response.albums);
+                }
+              },error => {
+                let errorMsg = <any>error;
+                if(errorMsg != null){
+                  var body = JSON.parse(error._body);
+                  Materialize.toast(body.message, 5000);
+                }
+              }
+            );
           }
         }, error => {
           let errorMsg = <any>error;

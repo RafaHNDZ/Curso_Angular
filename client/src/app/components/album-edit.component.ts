@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { GLOBAL } from '../services/global';
-import { ArtistService } from '../services/artist.service';
 import { UserService } from '../services/user.service';
 import { AlbumService } from '../services/album.service';
+import { UploadService } from '../services/upload.service';
 import { Artist } from '../models/artist';
 import { Album } from '../models/album';
 
@@ -14,27 +14,28 @@ declare var Materialize: any;
   selector: 'artits-edit',
   templateUrl: '../views/album-add.html',
   providers: [
-    ArtistService,
     UserService,
-    AlbumService
+    AlbumService,
+    UploadService
   ]
 })
 export class AlbumEditComponent implements OnInit {
 
   public titulo;
-  public artist: Artist;
   public album: Album;
   public identity;
   public token;
   public url: string;
   is_edit: boolean;
+  changed_img: boolean;
+  public filesToUpload: Array<File>;
 
   constructor(
     private _route: ActivatedRoute,
     private _router: Router,
-    private _artistServide: ArtistService,
     private _userService: UserService,
-    private _albumService: AlbumService
+    private _albumService: AlbumService,
+    private _uploadService: UploadService
   ) {
     this.titulo = "Editar Album";
     this.identity = this._userService.getIdentity();
@@ -42,6 +43,7 @@ export class AlbumEditComponent implements OnInit {
     this.url = GLOBAL.url;
     this.album = new Album('','','',2017,'','');
     this.is_edit = true;
+    this.changed_img = false;
    }
 
   ngOnInit() {
@@ -50,37 +52,30 @@ export class AlbumEditComponent implements OnInit {
   }
 
   getAlbum(){
-    this._route.params.forEach((params: Params) => {
-      let id = params['id'];
-      this._albumService.getAlbum(this.token, id).subscribe(
-        response => {
-          console.log(response);
-          if(!response.album){
-            Materialize.toast("Error en el servidor", 5000);
-          }else{
-            this.album = response.album;
-            console.log(response.album);
-          }
-        }, error => {
-          var errorMsg = <any>error;
-          if(errorMsg != null){
-            var body = JSON.parse(error._body);
-            Materialize.toast(body.message, 5000);
-          }
-        }
-      );
-    });
+    console.log("get Album!")
   }
 
   onSubmit(){
     this._route.params.forEach((params: Params) => {
       this.album.artist = params['artist'];
-      this._albumService.addAlbum(this.token, this.album).subscribe(response => {
+      this._albumService.updateAlbum(this.token, this.album._id, this.album).subscribe(response => {
         if(!response.album){
           Materialize.toast("Error en el servidor", 5000);
         }else{
-          Materialize.toast("Registrado", 4000);
-          this._router.navigate(['/edit-album', response.album._id]);
+          if(this.changed_img == true){
+            this._uploadService.makeFileRequest(this.url + 'upload-image-album/' + this.album._id, [], this.filesToUpload, this.token, 'image').then(
+              (result) => {
+                  Materialize.toast("Actualizado", 5000);
+                  this.album = response.album;
+              },
+              (error) => {
+                  console.log(error);
+                  Materialize.toast(error.message, 5000);
+              }
+            );
+          }else{
+            Materialize.toast("Actualizado", 5000);
+          }
         }
       }, error => {
         var errorMsg = <any>error;
@@ -92,6 +87,10 @@ export class AlbumEditComponent implements OnInit {
     });
   }
 
-
+  fileChangeEvent(fileInput: any){
+    this.filesToUpload = <Array<File>>fileInput.target.files;
+    this.changed_img = true;
+    console.log(this.filesToUpload);
+  }
 
 }

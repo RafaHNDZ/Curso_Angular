@@ -18,12 +18,17 @@
               <span class="help-block" *ngIf="!year.valid && year.touched">El año es obligatorio</span>
             </div>
           </div>
-          <div class="input-field col s12">
-            <textarea id="description" class="materialize-textarea" #description="ngModel" name="description" [(ngModel)]="album.description"></textarea>
-            <label for="description">Descripción</label>
-            <span class="help-bloc" *ngIf="!description.valid && description.touched">La descripción es obligatoria</span>
+          <div class="row">
+            <div class="input-field col s12">
+              <textarea id="description" class="materialize-textarea" #description="ngModel" name="description" [(ngModel)]="album.description"></textarea>
+              <label for="description">Descripción</label>
+              <span class="help-bloc" *ngIf="!description.valid && description.touched">La descripción es obligatoria</span>
+            </div>
           </div>
           <div class="row" *ngIf="is_edit">
+            <div class="col s12 m6">
+              <img class="img-responsive" src="{{url + 'get-image-album/' + album.image}}" width="250" height="250" style="pading: 0 auto;">
+            </div>
             <div class="col s12 m6">
               <div class="file-field input-field">
                 <div class="btn">
@@ -34,9 +39,6 @@
                   <input class="file-path validate" type="text" placeholder="Selecciona una imagen de portada...">
                 </div>
               </div>
-            </div>
-            <div class="col s12 m6">
-              <img class="img-responsive" src="" width="250" height="250" style="pading: 0 auto;">
             </div>
           </div>
           <button type="submit" class="btn">Registrar</button>
